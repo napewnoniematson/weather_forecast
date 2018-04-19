@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, WeatherActivity::class.java).apply {
                 putExtra(Constants.CITY, city)
                 putExtra(Constants.COUNTRY, country)
-
             }
             startActivity(intent)
         }
