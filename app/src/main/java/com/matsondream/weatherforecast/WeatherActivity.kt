@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.matsondream.exchangerates.HTTPHandlerImpl
 import com.matsondream.weatherforecast.constants.Constants
+import com.matsondream.weatherforecast.json.JsonWeatherConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
 
 class WeatherActivity : AppCompatActivity() {
@@ -33,6 +34,7 @@ class WeatherActivity : AppCompatActivity() {
     private inner class WeatherProvider(val context: Context, val url : String) : AsyncTask<Void, Void, Void>() {
         override fun doInBackground(vararg p0: Void?): Void? {
             json = HTTPHandlerImpl().makeServiceCall(url)
+            println(JsonWeatherConverter().toWeather(json!!).toString())
             return null
         }
 
