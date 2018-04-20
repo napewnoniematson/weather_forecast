@@ -21,7 +21,6 @@ class JsonWeatherConverter {
         weather.pressure = obj.getJSONObject("main").getString("pressure")
         weather.humidity = obj.getJSONObject("main").getString("humidity")
         weather.windSpd = obj.getJSONObject("wind").getString("speed")
-        weather.clouds = obj.getJSONObject("clouds").getString("all")
         weather.dt = obj.getString("dt")
         weather.country = obj.getJSONObject("sys").getString("country")
         weather.sunrise = obj.getJSONObject("sys").getString("sunrise")

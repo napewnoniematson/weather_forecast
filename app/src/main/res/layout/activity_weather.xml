@@ -6,4 +6,114 @@
     android:layout_height="match_parent"
     tools:context="com.matsondream.weatherforecast.WeatherActivity">
 
+    <TextView
+        android:id="@+id/placeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="city, country"
+        app:layout_constraintStart_toStartOf="@+id/tempTV"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iconImgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:id="@+id/descTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="desc"
+        app:layout_constraintStart_toStartOf="@+id/iconImgView"
+        app:layout_constraintTop_toBottomOf="@+id/iconImgView" />
+
+    <TextView
+        android:id="@+id/tempTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="temp "
+        app:layout_constraintStart_toStartOf="@+id/humidityImgView"
+        app:layout_constraintTop_toBottomOf="@+id/placeTV" />
+
+    <TextView
+        android:id="@+id/pressureTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="pressure"
+        app:layout_constraintStart_toEndOf="@+id/humidityImgView"
+        app:layout_constraintTop_toBottomOf="@+id/placeTV" />
+
+    <TextView
+        android:id="@+id/windSpdTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="wind speed"
+        app:layout_constraintStart_toEndOf="@+id/windSpdImgView"
+        app:layout_constraintTop_toTopOf="@+id/windSpdImgView" />
+
+    <TextView
+        android:id="@+id/humidityTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="humidity"
+        app:layout_constraintStart_toEndOf="@+id/humidityImgView"
+        app:layout_constraintTop_toTopOf="@+id/humidityImgView" />
+
+    <ImageView
+        android:id="@+id/humidityImgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/windSpdImgView"
+        app:layout_constraintTop_toBottomOf="@+id/tempTV"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+    <ImageView
+        android:id="@+id/windSpdImgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/humidityImgView"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/sunriseTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="sunrise"
+        app:layout_constraintStart_toStartOf="@+id/descTV"
+        app:layout_constraintTop_toBottomOf="@+id/descTV" />
+
+    <TextView
+        android:id="@+id/sunsetTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="sunset"
+        app:layout_constraintStart_toStartOf="@+id/sunriseTV"
+        app:layout_constraintTop_toBottomOf="@+id/sunriseTV" />
+
+    <TextView
+        android:id="@+id/dtTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="dt"
+        app:layout_constraintStart_toStartOf="@+id/sunsetTV"
+        app:layout_constraintTop_toBottomOf="@+id/sunsetTV" />
 </android.support.constraint.ConstraintLayout>
