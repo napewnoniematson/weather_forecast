@@ -10,9 +10,6 @@ data class Weather (var city : String = "",
                     var temp : String = "",
                     var pressure : String = "",
                     var humidity : String = "",
-                    var windSpd : String = "",
-                    var dt : String = "",
-                    var sunrise : String = "",
-                    var sunset: String = ""
+                    var windSpd : String = ""
                     )
 

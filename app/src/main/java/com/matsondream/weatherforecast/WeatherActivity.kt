@@ -9,10 +9,10 @@ import com.matsondream.exchangerates.HTTPHandlerImpl
 import com.matsondream.weatherforecast.constants.Constants
 import com.matsondream.weatherforecast.json.JsonWeatherConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
+import com.matsondream.weatherforecast.model.Weather
+import kotlinx.android.synthetic.main.activity_weather.*
 
 class WeatherActivity : AppCompatActivity() {
-
-    var json : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +31,27 @@ class WeatherActivity : AppCompatActivity() {
         Log.e("WeatherActivity", "url: $url")
     }
 
+    private fun updateViews(weather: Weather){
+        placeTV.text = "${weather.city}, ${weather.country}"
+        tempTV.text = "${weather.temp} °C"
+        pressureTV.text = "${weather.pressure} hPa"
+        humidityTV.text = "${weather.humidity}%"
+        windSpdTV.text = "${weather.windSpd} m/s"
+        descTV.text = weather.desc
+    }
+
     private inner class WeatherProvider(val context: Context, val url : String) : AsyncTask<Void, Void, Void>() {
+        var json : String? = null
         override fun doInBackground(vararg p0: Void?): Void? {
             json = HTTPHandlerImpl().makeServiceCall(url)
-            println(JsonWeatherConverter().toWeather(json!!).toString())
+            Log.e("WeatherProvider", JsonWeatherConverter().toWeather(json!!).toString())
             return null
         }
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            Log.e("WeatherActivity", "json: $json")
+            updateViews(JsonWeatherConverter().toWeather(json!!))
+            Log.e("WeatherProvider", "updateViews")
         }
-
     }
-
-
-
 }
