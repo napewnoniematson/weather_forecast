@@ -9,6 +9,5 @@ data class Weather (var iconDesc : String = "",
                     var pressure : String = "",
                     var humidity : String = "",
                     var windSpd : String = "",
-                    var dt_txt : String = ""
-                    )
+                    var dt_txt : String = "")
 

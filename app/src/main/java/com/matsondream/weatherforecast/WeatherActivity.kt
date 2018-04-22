@@ -1,11 +1,14 @@
 package com.matsondream.weatherforecast
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import com.matsondream.exchangerates.HTTPHandlerImpl
+import com.matsondream.weatherforecast.adapter.ForecastRecyclerAdapter
 import com.matsondream.weatherforecast.json.JsonConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
 import com.matsondream.weatherforecast.model.City
@@ -65,6 +68,16 @@ class WeatherActivity : AppCompatActivity() {
                 weather -> println(weather.dt_txt)
             }
             updateView(forecast!![0], city!!)
+            val adapter = ForecastRecyclerAdapter(context, forecast!!)
+            weatherRecyclerView.adapter = adapter
+            val orientation : Int = getResources().getConfiguration().orientation
+            weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+                weatherRecyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+            }
+            if(orientation == Configuration.ORIENTATION_PORTRAIT){
+                weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+            }
 
             Log.e("WeatherProvider", "updateView")
         }
