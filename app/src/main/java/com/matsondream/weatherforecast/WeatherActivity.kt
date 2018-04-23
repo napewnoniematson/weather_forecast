@@ -41,7 +41,7 @@ class WeatherActivity : AppCompatActivity() {
         Log.e("WeatherActivity", "url: $url")
     }
 
-    private fun updateView(weather: Weather, city: City){
+    internal fun updateView(weather: Weather, city: City){
         placeTV.text = "${city.name}, ${city.country}"
         tempTV.text = "${weather.temp} °C"
         pressureTV.text = "${weather.pressure} hPa"
@@ -87,7 +87,7 @@ class WeatherActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
             (progressBar.parent as ViewGroup).removeView(progressBar)
             updateView(forecast!![0], city!!)
-            val adapter = ForecastRecyclerAdapter(context, forecast!!)
+            val adapter = ForecastRecyclerAdapter(context, city!!, forecast!!)
             weatherRecyclerView.adapter = adapter
             weatherRecyclerView.layoutManager = LinearLayoutManager(context)
 
