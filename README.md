@@ -10,7 +10,7 @@ User can check:
     * pressure
     * wind speed
 
-![alt text](screenshot/screenshot_merged.png "start view | start view after wrong input data | forecast presentation")
+![alt text](screenshos/screenshot_merged.png "start view | start view after wrong input data | forecast presentation")
 
 API: openweathermap.org
 Icons: icons8.com, iconsplace.com
