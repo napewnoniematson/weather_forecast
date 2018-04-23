@@ -8,116 +8,125 @@
     tools:context="com.matsondream.weatherforecast.WeatherActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/tempImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/placeTV"
+            app:layout_constraintTop_toBottomOf="@+id/placeTV"
+            app:srcCompat="@mipmap/temperature" />
+
+        <ImageView
+            android:id="@+id/humidityImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/tempImgView"
+            app:layout_constraintTop_toBottomOf="@+id/tempImgView"
+            app:srcCompat="@mipmap/humidity" />
+
+        <ImageView
+            android:id="@+id/pressureImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@+id/tempTV"
+            app:layout_constraintTop_toTopOf="@+id/tempImgView"
+            app:srcCompat="@mipmap/pressure" />
+
+        <ImageView
+            android:id="@+id/windSpdImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/pressureImgView"
+            app:layout_constraintTop_toTopOf="@+id/humidityImgView"
+            app:srcCompat="@mipmap/wind" />
+
+        <TextView
+            android:id="@+id/descTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="description"
+            app:layout_constraintBottom_toBottomOf="@+id/windSpdTV"
+            app:layout_constraintStart_toStartOf="@+id/iconImgView" />
+
+        <TextView
+            android:id="@+id/tempTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="temp "
+            app:layout_constraintStart_toEndOf="@+id/tempImgView"
+            app:layout_constraintTop_toTopOf="@+id/tempImgView" />
+
+        <TextView
+            android:id="@+id/humidityTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="humidity"
+            app:layout_constraintStart_toEndOf="@+id/humidityImgView"
+            app:layout_constraintTop_toTopOf="@+id/humidityImgView" />
+
+        <TextView
+            android:id="@+id/pressureTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="pressure"
+            app:layout_constraintStart_toEndOf="@+id/pressureImgView"
+            app:layout_constraintTop_toTopOf="@+id/pressureImgView" />
+
+        <TextView
+            android:id="@+id/windSpdTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="wind speed"
+            app:layout_constraintStart_toEndOf="@+id/windSpdImgView"
+            app:layout_constraintTop_toTopOf="@+id/windSpdImgView" />
+
+        <ImageView
+            android:id="@+id/iconImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/descTV"
+            app:layout_constraintStart_toEndOf="@+id/pressureTV" />
+
+        <TextView
+            android:id="@+id/placeTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="city, country"
+            android:textSize="26dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/placeTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="city, country"
-        android:textSize="26dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iconImgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/descTV"
-        app:layout_constraintStart_toEndOf="@+id/pressureTV"
-        app:srcCompat="@mipmap/ic_launcher_round" />
-
-    <TextView
-        android:id="@+id/descTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="desc"
-        app:layout_constraintBottom_toBottomOf="@+id/windSpdTV"
-        app:layout_constraintStart_toStartOf="@+id/iconImgView" />
-
-    <TextView
-        android:id="@+id/tempTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="temp "
-        app:layout_constraintStart_toEndOf="@+id/tempImgView"
-        app:layout_constraintTop_toTopOf="@+id/tempImgView" />
-
-    <TextView
-        android:id="@+id/pressureTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="pressure"
-        app:layout_constraintStart_toEndOf="@+id/pressureImgView"
-        app:layout_constraintTop_toTopOf="@+id/pressureImgView" />
-
-    <TextView
-        android:id="@+id/windSpdTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="wind speed"
-        app:layout_constraintStart_toEndOf="@+id/windSpdImgView"
-        app:layout_constraintTop_toTopOf="@+id/windSpdImgView" />
-
-    <TextView
-        android:id="@+id/humidityTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="humidity"
-        app:layout_constraintStart_toEndOf="@+id/humidityImgView"
-        app:layout_constraintTop_toTopOf="@+id/humidityImgView" />
-
-    <ImageView
-        android:id="@+id/humidityImgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/tempImgView"
-        app:layout_constraintTop_toBottomOf="@+id/tempImgView"
-        app:srcCompat="@mipmap/humidity" />
-
-    <ImageView
-        android:id="@+id/windSpdImgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/pressureImgView"
-        app:layout_constraintTop_toTopOf="@+id/humidityImgView"
-        app:srcCompat="@mipmap/wind" />
-
-    <ImageView
-        android:id="@+id/tempImgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/placeTV"
-        app:layout_constraintTop_toBottomOf="@+id/placeTV"
-        app:srcCompat="@mipmap/temperature" />
-
-    <ImageView
-        android:id="@+id/pressureImgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/tempTV"
-        app:layout_constraintTop_toTopOf="@+id/tempImgView"
-        app:srcCompat="@mipmap/pressure" />
+        app:layout_constraintBottom_toBottomOf="@+id/weatherRecyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/weatherRecyclerView"
+        app:layout_constraintStart_toStartOf="@+id/weatherRecyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/weatherRecyclerView"
@@ -126,10 +135,10 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/windSpdImgView" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
 </android.support.constraint.ConstraintLayout>
