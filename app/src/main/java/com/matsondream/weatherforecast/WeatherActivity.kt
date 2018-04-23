@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import com.matsondream.exchangerates.HTTPHandlerImpl
 import com.matsondream.weatherforecast.R.mipmap.clear
 import com.matsondream.weatherforecast.R.mipmap.humidity
@@ -29,11 +31,11 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun incomingCall() {
-        val city = intent.getStringExtra(Constants.CITY)
-        val country = intent.getStringExtra(Constants.COUNTRY)
+        //val city = intent.getStringExtra(Constants.CITY)
+        //val country = intent.getStringExtra(Constants.COUNTRY)
 
-        //val city = "Łódź"
-        //val country = "PL"
+        val city = "Łódź"
+        val country = "PL"
         val url = UrlProviderImpl().getForecastUrl(city, country)
         WeatherProvider(this, url).execute()
         Log.e("WeatherActivity", "url: $url")
@@ -82,6 +84,8 @@ class WeatherActivity : AppCompatActivity() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             //updateView(JsonConverter().getWeather(json!!), get)
+            progressBar.visibility = View.GONE
+            (progressBar.parent as ViewGroup).removeView(progressBar)
             updateView(forecast!![0], city!!)
             val adapter = ForecastRecyclerAdapter(context, forecast!!)
             weatherRecyclerView.adapter = adapter
