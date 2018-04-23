@@ -13,44 +13,28 @@ import java.net.URL
  */
 class HTTPHandlerImpl : HTTPHandler {
 
+    @Throws(MalformedURLException::class, IOException::class)
     override fun makeServiceCall(reqUrl: String): String? {
         var response: String? = null
-        try {
-            var url = URL(reqUrl)
-            var connection  = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            var stream: InputStream = BufferedInputStream(connection.inputStream)
-            response = convertStreamToString(stream)
-
-        }catch (e: MalformedURLException) {
-            Log.e("HTTPHandlerImpl", "MalformedURLException: " + e.message)
-        } catch (e: IOException) {
-            Log.e("HTTPHandlerImpl", "IOExceprion: " + e.message)
-        }
+        var url = URL(reqUrl)
+        var connection  = url.openConnection() as HttpURLConnection
+        connection.requestMethod = "GET"
+        var stream: InputStream = BufferedInputStream(connection.inputStream)
+        response = convertStreamToString(stream)
         return response
     }
 
+    @Throws(IOException::class)
     private fun convertStreamToString(stream: InputStream): String {
         var reader = BufferedReader(InputStreamReader(stream))
         var sb = StringBuilder()
         var line: String?
-        try {
+        line = reader.readLine()
+        while (line != null) {
+            sb.append(line).append('\n')
             line = reader.readLine()
-            while (line != null) {
-                sb.append(line).append('\n')
-                line = reader.readLine()
-            }
-        }catch (e: IOException) {
-            Log.e("HTTPHandlerImpl", "IOException: " + e.message)
-        } finally {
-            try {
-                stream.close()
-            } catch (e: IOException) {
-                Log.e("HTTPHandlerImpl", "IOException: " + e.message)
-            }
         }
+        stream.close()
         return  sb.toString()
     }
-
-
 }

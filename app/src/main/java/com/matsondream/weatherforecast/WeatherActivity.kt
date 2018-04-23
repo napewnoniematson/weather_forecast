@@ -1,23 +1,30 @@
 package com.matsondream.weatherforecast
 
 import android.content.Context
-import android.net.ConnectivityManager
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.ActionMode
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.matsondream.exchangerates.HTTPHandlerImpl
 import com.matsondream.weatherforecast.R.mipmap.*
 import com.matsondream.weatherforecast.adapter.ForecastRecyclerAdapter
+import com.matsondream.weatherforecast.constants.Constants
 import com.matsondream.weatherforecast.constants.WeatherConditionCodes
 import com.matsondream.weatherforecast.json.JsonConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
 import com.matsondream.weatherforecast.model.City
 import com.matsondream.weatherforecast.model.Weather
 import kotlinx.android.synthetic.main.activity_weather.*
+import java.io.IOException
+import java.net.MalformedURLException
 
 class WeatherActivity : AppCompatActivity() {
 
@@ -28,11 +35,11 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun incomingCall() {
-        //val city = intent.getStringExtra(Constants.CITY)
-        //val country = intent.getStringExtra(Constants.COUNTRY)
+        val city = intent.getStringExtra(Constants.CITY)
+        val country = intent.getStringExtra(Constants.COUNTRY)
 
-        val city = "Łódź"
-        val country = "PL"
+        //val city = "Łódź"
+        //val country = "PL"
         val url = UrlProviderImpl().getForecastUrl(city, country)
         WeatherProvider(this, url).execute()
         Log.e("WeatherActivity", "url: $url")
@@ -49,30 +56,23 @@ class WeatherActivity : AppCompatActivity() {
         iconImgView.setImageResource(imgId)
     }
 
-    internal fun findImgId(iconDesc : String, time : String) : Int {
-        var id : Int = clear
+    internal fun findImgId(iconDesc : String, time : String) : Int =
         when (iconDesc) {
-            WeatherConditionCodes.CLEAR.value -> if (isDay(time)) id = clear else id = clearn
-            WeatherConditionCodes.RAIN.value -> id = rain
-            WeatherConditionCodes.CLOUDS.value -> id = clouds
-            WeatherConditionCodes.DRIZZLE.value -> id = drizzle
-            WeatherConditionCodes.SNOW.value -> id = snow
-            WeatherConditionCodes.ATMOSPHERE.value -> id = atmosphere
-            WeatherConditionCodes.THUNDERSTORM.value -> id = thunderstorm
-            WeatherConditionCodes.EXTREME.value -> id = extreme
+            WeatherConditionCodes.CLEAR.value -> if (isDay(time)) clear else clearn
+            WeatherConditionCodes.RAIN.value -> rain
+            WeatherConditionCodes.CLOUDS.value -> clouds
+            WeatherConditionCodes.DRIZZLE.value -> drizzle
+            WeatherConditionCodes.SNOW.value -> snow
+            WeatherConditionCodes.ATMOSPHERE.value -> atmosphere
+            WeatherConditionCodes.THUNDERSTORM.value -> thunderstorm
+            WeatherConditionCodes.EXTREME.value -> extreme
+            else -> clear
         }
-        return id
-    }
 
     private fun isDay(weatherTime: String) = getHour(weatherTime) in 6..18
 
     private fun getHour(weatherTime: String) : Int = weatherTime.substring(0..1).toInt()
 
-    private fun isNetworkAvailable() : Boolean {
-        var connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var activeNetworkInfo = connectivityManager.activeNetworkInfo
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected
-    }
 
     private inner class WeatherProvider(val context: Context, val url : String) :
             AsyncTask<Void, Void, Void>() {
@@ -82,25 +82,23 @@ class WeatherActivity : AppCompatActivity() {
         var city : City? = null
 
         override fun doInBackground(vararg p0: Void?): Void? {
-            if (isNetworkAvailable()) {
+            try {
                 json = HTTPHandlerImpl().makeServiceCall(url)
                 val converter = JsonConverter()
                 forecast = converter.getForecast(json!!)
                 city = converter.getCity(json!!)
-                //Log.e("WeatherProvider", JsonConverter().getWeather(json!!).toString())
-                Log.e("WeatherProvider", HTTPHandlerImpl().makeServiceCall(
-                        UrlProviderImpl().getForecastUrl("Łódź", "PL")))
-            } else {
-                Log.e("WeatherProvider", "Network is not available")
-                //show toast
+                Log.e("WeatherProvider", json)
+            }catch (e: MalformedURLException) {
+                Log.e("MalformedUrlException: ", e.message)
+            }catch (e: IOException) {
+                Log.e("IOException: ", e.message)
+                this.cancel(true)
             }
-
             return null
         }
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            //displayData(JsonConverter().getWeather(json!!), get)
             progressBar.visibility = View.GONE
             (progressBar.parent as ViewGroup).removeView(progressBar)
             displayData(forecast!![0], city!!)
@@ -110,6 +108,14 @@ class WeatherActivity : AppCompatActivity() {
             weatherRecyclerView.layoutManager = LinearLayoutManager(context)
 
             Log.e("WeatherProvider", "displayData")
+        }
+
+        override fun onCancelled() {
+            super.onCancelled()
+            (context as WeatherActivity).finish()
+            Toast.makeText(context,
+                    "Your city name or country code is wrong. Please enter correct data",
+                    Toast.LENGTH_LONG).show()
         }
     }
 }
