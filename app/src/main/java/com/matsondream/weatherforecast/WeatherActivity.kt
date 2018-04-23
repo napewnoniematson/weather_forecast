@@ -2,6 +2,7 @@ package com.matsondream.weatherforecast
 
 import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.matsondream.exchangerates.HTTPHandlerImpl
+import com.matsondream.weatherforecast.R.mipmap.clear
+import com.matsondream.weatherforecast.R.mipmap.humidity
 import com.matsondream.weatherforecast.adapter.ForecastRecyclerAdapter
 import com.matsondream.weatherforecast.constants.Constants
 import com.matsondream.weatherforecast.json.JsonConverter
@@ -43,6 +46,13 @@ class WeatherActivity : AppCompatActivity() {
         humidityTV.text = "${weather.humidity}%"
         windSpdTV.text = "${weather.windSpd} m/s"
         descTV.text = weather.desc
+        iconImgView.setImageResource(clear)
+    }
+
+    private fun isNetworkAvailable() : Boolean {
+        var connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        var activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
     private inner class WeatherProvider(val context: Context, val url : String) :
@@ -53,13 +63,19 @@ class WeatherActivity : AppCompatActivity() {
         var city : City? = null
 
         override fun doInBackground(vararg p0: Void?): Void? {
-            json = HTTPHandlerImpl().makeServiceCall(url)
-            val converter = JsonConverter()
-            forecast = converter.getForecast(json!!)
-            city = converter.getCity(json!!)
-            //Log.e("WeatherProvider", JsonConverter().getWeather(json!!).toString())
-            Log.e("WeatherProvider", HTTPHandlerImpl().makeServiceCall(
-                    UrlProviderImpl().getForecastUrl("Łódź", "PL")))
+            if (isNetworkAvailable()) {
+                json = HTTPHandlerImpl().makeServiceCall(url)
+                val converter = JsonConverter()
+                forecast = converter.getForecast(json!!)
+                city = converter.getCity(json!!)
+                //Log.e("WeatherProvider", JsonConverter().getWeather(json!!).toString())
+                Log.e("WeatherProvider", HTTPHandlerImpl().makeServiceCall(
+                        UrlProviderImpl().getForecastUrl("Łódź", "PL")))
+            } else {
+                Log.e("WeatherProvider", "Network is not available")
+                //show toast
+            }
+
             return null
         }
 

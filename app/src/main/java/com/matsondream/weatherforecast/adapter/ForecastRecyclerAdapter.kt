@@ -44,7 +44,7 @@ class ForecastRecyclerAdapter(private val context : Context, private val forecas
         holder.tempTV.text = "${weather.temp} °C"
         holder.dateTV.text = weather.date
         holder.timeTV.text = weather.time
-        //holder.iconImgView
+        holder.iconImgView.setImageResource(R.mipmap.clear)
         holder.descTV.text = weather.desc
     }
 

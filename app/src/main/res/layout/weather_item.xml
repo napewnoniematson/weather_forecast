@@ -10,13 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@android:color/holo_blue_dark"
-        app:contentPaddingBottom="5dp"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="27dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/itemDateTV"
