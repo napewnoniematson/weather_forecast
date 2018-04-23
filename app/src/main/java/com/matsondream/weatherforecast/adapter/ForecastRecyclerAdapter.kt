@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import com.matsondream.weatherforecast.R
@@ -46,8 +47,16 @@ class ForecastRecyclerAdapter(private val context : Context, private val forecas
         holder.timeTV.text = weather.time
         holder.iconImgView.setImageResource(R.mipmap.clear)
         holder.descTV.text = weather.desc
+        setAnimation(holder.itemView)
     }
 
     override fun getItemCount(): Int = forecast.size
+
+    private fun setAnimation(view: View) {
+        if (view.animation == null) {
+            val animation = AnimationUtils.loadAnimation(view.context, android.R.anim.slide_in_left)
+            view.animation = animation
+        }
+    }
 
 }
