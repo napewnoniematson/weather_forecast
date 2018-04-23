@@ -43,9 +43,10 @@ class ForecastRecyclerAdapter(private val context : Context,
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastRecyclerAdapter.WeatherHolder {
-        val view : View = LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false)
-        //val card : CardView = view.findViewById(R.id.cardView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
+            ForecastRecyclerAdapter.WeatherHolder {
+        val view : View = LayoutInflater.from(parent.context)
+                .inflate(R.layout.weather_item, parent, false)
         return WeatherHolder(view)
     }
 
@@ -90,7 +91,6 @@ class ForecastRecyclerAdapter(private val context : Context,
             context.displayData(weather, city)
     }
 
-
     private fun setHighlightingFeatureOn(actualHolderView: View?, previousHolderView: View?) {
         highlight(actualHolderView)
         if (actualHolderView!! != previousHolderView)
@@ -111,5 +111,4 @@ class ForecastRecyclerAdapter(private val context : Context,
             view.setBackgroundColor(color)
         }
     }
-
 }

@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         if (isNetworkAvailable())
             startActivity(intent)
         else
-            showNetworkUnavailableMessage("No internet access")
+            showNetworkUnavailableMessage()
     }
 
     private fun getIntentWithData() : Intent{
@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity() {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected
     }
 
-    private fun showNetworkUnavailableMessage(msg : String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    private fun showNetworkUnavailableMessage() {
+        Toast.makeText(this,
+                "No internet access",
+                Toast.LENGTH_SHORT).show()
     }
 }

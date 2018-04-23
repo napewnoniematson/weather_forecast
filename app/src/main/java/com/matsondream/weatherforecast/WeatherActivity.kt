@@ -1,15 +1,11 @@
 package com.matsondream.weatherforecast
 
 import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
-import android.view.ActionMode
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -37,12 +33,8 @@ class WeatherActivity : AppCompatActivity() {
     private fun incomingCall() {
         val city = intent.getStringExtra(Constants.CITY)
         val country = intent.getStringExtra(Constants.COUNTRY)
-
-        //val city = "Łódź"
-        //val country = "PL"
         val url = UrlProviderImpl().getForecastUrl(city, country)
         WeatherProvider(this, url).execute()
-        Log.e("WeatherActivity", "url: $url")
     }
 
     internal fun displayData(weather: Weather, city: City) {
@@ -99,20 +91,34 @@ class WeatherActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            progressBar.visibility = View.GONE
-            (progressBar.parent as ViewGroup).removeView(progressBar)
-            displayData(forecast!![0], city!!)
-            displayingDataLayout.visibility = View.VISIBLE
-            val adapter = ForecastRecyclerAdapter(context, city!!, forecast!!)
-            weatherRecyclerView.adapter = adapter
-            weatherRecyclerView.layoutManager = LinearLayoutManager(context)
-
-            Log.e("WeatherProvider", "displayData")
+            killProgressBar()
+            displayFirstWeather()
+            loadForecastView()
         }
 
         override fun onCancelled() {
             super.onCancelled()
             (context as WeatherActivity).finish()
+            showWrongInputMessage()
+        }
+
+        private fun killProgressBar() {
+            progressBar.visibility = View.GONE
+            (progressBar.parent as ViewGroup).removeView(progressBar)
+        }
+
+        private fun displayFirstWeather() {
+            displayData(forecast!![0], city!!)
+            displayingDataLayout.visibility = View.VISIBLE
+        }
+
+        private fun loadForecastView() {
+            val adapter = ForecastRecyclerAdapter(context, city!!, forecast!!)
+            weatherRecyclerView.adapter = adapter
+            weatherRecyclerView.layoutManager = LinearLayoutManager(context)
+        }
+
+        private fun showWrongInputMessage() {
             Toast.makeText(context,
                     "Your city name or country code is wrong. Please enter correct data",
                     Toast.LENGTH_LONG).show()

@@ -15,16 +15,12 @@ class JsonConverter {
     fun getWeather(json : String) : Weather {
         val weather = Weather()
         val obj = JSONObject(json)
-
         weather.iconDesc = obj.getJSONArray("weather").getJSONObject(0).getString("main")
         weather.desc = obj.getJSONArray("weather").getJSONObject(0).getString("description")
         weather.temp = obj.getJSONObject("main").getString("temp")
         weather.pressure = obj.getJSONObject("main").getString("pressure")
         weather.humidity = obj.getJSONObject("main").getString("humidity")
         weather.windSpd = obj.getJSONObject("wind").getString("speed")
-        //weather.country = obj.getJSONObject("sys").getString("country")
-        //weather.city = obj.getString("name")
-
         return weather
     }
 
@@ -32,12 +28,9 @@ class JsonConverter {
     fun getForecast(json: String) : List<Weather> {
         val forecast = mutableListOf<Weather>()
         val list = JSONObject(json).getJSONArray("list")
-
-
         for (i in 0 until list.length()) {
             val weather = Weather()
             val obj = list.getJSONObject(i)
-
             weather.iconDesc = obj.getJSONArray("weather").getJSONObject(0).getString("main")
             weather.desc = obj.getJSONArray("weather").getJSONObject(0).getString("description")
             weather.temp = obj.getJSONObject("main").getString("temp")
@@ -56,11 +49,8 @@ class JsonConverter {
     fun getCity(json: String) : City {
         val city = City()
         val obj = JSONObject(json).getJSONObject("city")
-
         city.name = obj.getString("name")
         city.country = obj.getString("country")
-
         return city
     }
-
 }
