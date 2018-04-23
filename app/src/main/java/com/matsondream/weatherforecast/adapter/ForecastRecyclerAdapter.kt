@@ -1,9 +1,7 @@
 package com.matsondream.weatherforecast.adapter
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,7 +14,6 @@ import com.matsondream.weatherforecast.R
 import com.matsondream.weatherforecast.WeatherActivity
 import com.matsondream.weatherforecast.model.City
 import com.matsondream.weatherforecast.model.Weather
-import kotlinx.android.synthetic.main.activity_weather.*
 
 /**
  * Created by Matson on 22.04.2018.
@@ -62,10 +59,11 @@ class ForecastRecyclerAdapter(private val context : Context,
         setAnimation(holder.itemView)
         holder.itemView.setOnClickListener {
             setHighlightingFeatureOn(holder.cardView, prevHolder?.cardView)
+            displayData(holder, weather, city)
             prevHolder = holder
         }
 //        if (context is WeatherActivity) {
-//            context.updateView(weather, city)
+//            context.displayData(weather, city)
 //            val prevHolder = context.weatherRecyclerView.
 //                    findViewHolderForAdapterPosition(prevPosition).itemView
 //            highlight(prevHolder)
@@ -74,7 +72,6 @@ class ForecastRecyclerAdapter(private val context : Context,
 
     override fun getItemCount(): Int = forecast.size
 
-
     private fun setAnimation(view: View) {
         if (view.animation == null) {
             val animation = AnimationUtils.loadAnimation(view.context, android.R.anim.slide_in_left)
@@ -82,11 +79,21 @@ class ForecastRecyclerAdapter(private val context : Context,
         }
     }
 
+    private fun displayData(holder: WeatherHolder, weather: Weather, city: City) {
+        if (holder != prevHolder)
+            displayData(weather, city)
+    }
+
+    private fun displayData(weather: Weather, city: City) {
+        if (context is WeatherActivity)
+            context.displayData(weather, city)
+    }
+
 
     private fun setHighlightingFeatureOn(actualHolderView: View?, previousHolderView: View?) {
         highlight(actualHolderView)
         if (actualHolderView!! != previousHolderView)
-        dehighlight(previousHolderView)
+            dehighlight(previousHolderView)
     }
 
     private fun highlight(view: View?) {

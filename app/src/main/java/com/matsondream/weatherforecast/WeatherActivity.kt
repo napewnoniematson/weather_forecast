@@ -1,21 +1,17 @@
 package com.matsondream.weatherforecast
 
 import android.content.Context
-import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.matsondream.exchangerates.HTTPHandlerImpl
 import com.matsondream.weatherforecast.R.mipmap.clear
-import com.matsondream.weatherforecast.R.mipmap.humidity
 import com.matsondream.weatherforecast.adapter.ForecastRecyclerAdapter
-import com.matsondream.weatherforecast.constants.Constants
 import com.matsondream.weatherforecast.json.JsonConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
 import com.matsondream.weatherforecast.model.City
@@ -41,7 +37,7 @@ class WeatherActivity : AppCompatActivity() {
         Log.e("WeatherActivity", "url: $url")
     }
 
-    internal fun updateView(weather: Weather, city: City){
+    internal fun displayData(weather: Weather, city: City){
         placeTV.text = "${city.name}, ${city.country}"
         tempTV.text = "${weather.temp} °C"
         pressureTV.text = "${weather.pressure} hPa"
@@ -83,24 +79,16 @@ class WeatherActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
-            //updateView(JsonConverter().getWeather(json!!), get)
+            //displayData(JsonConverter().getWeather(json!!), get)
             progressBar.visibility = View.GONE
             (progressBar.parent as ViewGroup).removeView(progressBar)
-            updateView(forecast!![0], city!!)
+            displayData(forecast!![0], city!!)
+            displayingDataLayout.visibility = View.VISIBLE
             val adapter = ForecastRecyclerAdapter(context, city!!, forecast!!)
             weatherRecyclerView.adapter = adapter
             weatherRecyclerView.layoutManager = LinearLayoutManager(context)
 
-//            val orientation : Int = getResources().getConfiguration().orientation
-//            weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-//            if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-//                weatherRecyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-//            }
-//            if(orientation == Configuration.ORIENTATION_PORTRAIT){
-//                weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-//            }
-
-            Log.e("WeatherProvider", "updateView")
+            Log.e("WeatherProvider", "displayData")
         }
     }
 }
