@@ -6,9 +6,11 @@ import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.matsondream.exchangerates.HTTPHandlerImpl
 import com.matsondream.weatherforecast.adapter.ForecastRecyclerAdapter
+import com.matsondream.weatherforecast.constants.Constants
 import com.matsondream.weatherforecast.json.JsonConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
 import com.matsondream.weatherforecast.model.City
@@ -24,11 +26,11 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun incomingCall() {
-        //val city = intent.getStringExtra(Constants.CITY)
-        //val country = intent.getStringExtra(Constants.COUNTRY)
+        val city = intent.getStringExtra(Constants.CITY)
+        val country = intent.getStringExtra(Constants.COUNTRY)
 
-        val city = "Łódź"
-        val country = "PL"
+        //val city = "Łódź"
+        //val country = "PL"
         val url = UrlProviderImpl().getForecastUrl(city, country)
         WeatherProvider(this, url).execute()
         Log.e("WeatherActivity", "url: $url")
@@ -64,20 +66,19 @@ class WeatherActivity : AppCompatActivity() {
         override fun onPostExecute(result: Void?) {
             super.onPostExecute(result)
             //updateView(JsonConverter().getWeather(json!!), get)
-            forecast!!.forEach {
-                weather -> println(weather.dt_txt)
-            }
             updateView(forecast!![0], city!!)
             val adapter = ForecastRecyclerAdapter(context, forecast!!)
             weatherRecyclerView.adapter = adapter
-            val orientation : Int = getResources().getConfiguration().orientation
-            weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            if(orientation == Configuration.ORIENTATION_LANDSCAPE){
-                weatherRecyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-            }
-            if(orientation == Configuration.ORIENTATION_PORTRAIT){
-                weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-            }
+            weatherRecyclerView.layoutManager = LinearLayoutManager(context)
+
+//            val orientation : Int = getResources().getConfiguration().orientation
+//            weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+//            if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+//                weatherRecyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+//            }
+//            if(orientation == Configuration.ORIENTATION_PORTRAIT){
+//                weatherRecyclerView.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+//            }
 
             Log.e("WeatherProvider", "updateView")
         }

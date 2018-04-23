@@ -44,7 +44,9 @@ class JsonConverter {
             weather.pressure = obj.getJSONObject("main").getString("pressure")
             weather.humidity = obj.getJSONObject("main").getString("humidity")
             weather.windSpd = obj.getJSONObject("wind").getString("speed")
-            weather.dt_txt = obj.getString("dt_txt")
+            val datatime = obj.getString("dt_txt").split(" ")
+            weather.date = datatime[0]
+            weather.time = datatime[1]
             forecast.add(weather)
         }
         return forecast.toList()

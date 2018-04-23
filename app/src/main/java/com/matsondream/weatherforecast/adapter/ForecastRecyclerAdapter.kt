@@ -19,13 +19,15 @@ class ForecastRecyclerAdapter(private val context : Context, private val forecas
 
     inner class WeatherHolder(view : View) : RecyclerView.ViewHolder(view) {
         var tempTV : TextView
-        var dataTimeTV : TextView
+        var dateTV : TextView
+        var timeTV : TextView
         var iconImgView : ImageView
         var descTV : TextView
 
         init {
             tempTV = view.findViewById(R.id.itemTempTV)
-            dataTimeTV = view.findViewById(R.id.itemDataTimeTV)
+            dateTV = view.findViewById(R.id.itemDateTV)
+            timeTV = view.findViewById(R.id.itemTimeTV)
             iconImgView = view.findViewById(R.id.itemIconImgView)
             descTV = view.findViewById(R.id.itemDescTV)
         }
@@ -33,13 +35,15 @@ class ForecastRecyclerAdapter(private val context : Context, private val forecas
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ForecastRecyclerAdapter.WeatherHolder {
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.weather_item, parent, false)
+        //val card : CardView = view.findViewById(R.id.cardView)
         return WeatherHolder(view)
     }
 
     override fun onBindViewHolder(holder: ForecastRecyclerAdapter.WeatherHolder, position: Int) {
         val weather : Weather= forecast[position]
-        holder.tempTV.text = weather.temp
-        holder.dataTimeTV.text = weather.dt_txt
+        holder.tempTV.text = "${weather.temp} °C"
+        holder.dateTV.text = weather.date
+        holder.timeTV.text = weather.time
         //holder.iconImgView
         holder.descTV.text = weather.desc
     }

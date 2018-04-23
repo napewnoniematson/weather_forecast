@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light"
     tools:context="com.matsondream.weatherforecast.WeatherActivity"
     tools:layout_editor_absoluteY="81dp">
 
@@ -11,7 +12,7 @@
         android:id="@+id/placeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="city, country"
         android:textSize="26dp"
@@ -22,9 +23,10 @@
         android:id="@+id/iconImgView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        app:layout_constraintStart_toEndOf="@+id/placeTV"
-        app:layout_constraintTop_toTopOf="@+id/placeTV"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/descTV"
+        app:layout_constraintStart_toEndOf="@+id/pressureTV"
         app:srcCompat="@mipmap/ic_launcher_round" />
 
     <TextView
@@ -32,10 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="desc"
-        app:layout_constraintStart_toStartOf="@+id/iconImgView"
-        app:layout_constraintTop_toBottomOf="@+id/iconImgView" />
+        app:layout_constraintBottom_toBottomOf="@+id/windSpdTV"
+        app:layout_constraintStart_toStartOf="@+id/iconImgView" />
 
     <TextView
         android:id="@+id/tempTV"
@@ -103,18 +104,22 @@
         android:id="@+id/pressureImgView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@+id/tempTV"
         app:layout_constraintTop_toTopOf="@+id/tempImgView"
         app:srcCompat="@mipmap/pressure" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/weatherRecyclerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/windSpdImgView" />
 
 </android.support.constraint.ConstraintLayout>
