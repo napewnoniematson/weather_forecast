@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Weather forecast</string>
-    <string name="city_tv">City</string>
-    <string name="city_et">Please enter your city...</string>
-    <string name="country_tv">Country</string>
-    <string name="country_et">Please enter country code for city...</string>
+    <string name="city_tv">City name</string>
+    <string name="city_et">e.g.: New York, London</string>
+    <string name="country_tv">Country code</string>
+    <string name="country_et">eg.: US, UK</string>
 </resources>

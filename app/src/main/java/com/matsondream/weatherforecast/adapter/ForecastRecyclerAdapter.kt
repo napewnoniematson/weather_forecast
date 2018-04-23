@@ -54,23 +54,24 @@ class ForecastRecyclerAdapter(private val context : Context,
         holder.tempTV.text = "${weather.temp} °C"
         holder.dateTV.text = weather.date
         holder.timeTV.text = weather.time
-        holder.iconImgView.setImageResource(R.mipmap.clear)
         holder.descTV.text = weather.desc
+        val imgId = findImgId(weather.iconDesc, weather.time)
+        holder.iconImgView.setImageResource(imgId)
         setAnimation(holder.itemView)
         holder.itemView.setOnClickListener {
             setHighlightingFeatureOn(holder.cardView, prevHolder?.cardView)
             displayData(holder, weather, city)
             prevHolder = holder
         }
-//        if (context is WeatherActivity) {
-//            context.displayData(weather, city)
-//            val prevHolder = context.weatherRecyclerView.
-//                    findViewHolderForAdapterPosition(prevPosition).itemView
-//            highlight(prevHolder)
-//        }
     }
 
     override fun getItemCount(): Int = forecast.size
+
+    private fun findImgId(iconDesc : String, time : String) : Int =
+            if (context is WeatherActivity)
+                context.findImgId(iconDesc, time)
+            else
+                R.mipmap.clear
 
     private fun setAnimation(view: View) {
         if (view.animation == null) {

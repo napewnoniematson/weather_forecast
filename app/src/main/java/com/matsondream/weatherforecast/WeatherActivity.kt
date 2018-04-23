@@ -10,8 +10,9 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.matsondream.exchangerates.HTTPHandlerImpl
-import com.matsondream.weatherforecast.R.mipmap.clear
+import com.matsondream.weatherforecast.R.mipmap.*
 import com.matsondream.weatherforecast.adapter.ForecastRecyclerAdapter
+import com.matsondream.weatherforecast.constants.WeatherConditionCodes
 import com.matsondream.weatherforecast.json.JsonConverter
 import com.matsondream.weatherforecast.json.UrlProviderImpl
 import com.matsondream.weatherforecast.model.City
@@ -37,15 +38,35 @@ class WeatherActivity : AppCompatActivity() {
         Log.e("WeatherActivity", "url: $url")
     }
 
-    internal fun displayData(weather: Weather, city: City){
+    internal fun displayData(weather: Weather, city: City) {
         placeTV.text = "${city.name}, ${city.country}"
         tempTV.text = "${weather.temp} °C"
         pressureTV.text = "${weather.pressure} hPa"
         humidityTV.text = "${weather.humidity}%"
         windSpdTV.text = "${weather.windSpd} m/s"
         descTV.text = weather.desc
-        iconImgView.setImageResource(clear)
+        val imgId = findImgId(weather.iconDesc, weather.time)
+        iconImgView.setImageResource(imgId)
     }
+
+    internal fun findImgId(iconDesc : String, time : String) : Int {
+        var id : Int = clear
+        when (iconDesc) {
+            WeatherConditionCodes.CLEAR.value -> if (isDay(time)) id = clear else id = clearn
+            WeatherConditionCodes.RAIN.value -> id = rain
+            WeatherConditionCodes.CLOUDS.value -> id = clouds
+            WeatherConditionCodes.DRIZZLE.value -> id = drizzle
+            WeatherConditionCodes.SNOW.value -> id = snow
+            WeatherConditionCodes.ATMOSPHERE.value -> id = atmosphere
+            WeatherConditionCodes.THUNDERSTORM.value -> id = thunderstorm
+            WeatherConditionCodes.EXTREME.value -> id = extreme
+        }
+        return id
+    }
+
+    private fun isDay(weatherTime: String) = getHour(weatherTime) in 6..18
+
+    private fun getHour(weatherTime: String) : Int = weatherTime.substring(0..1).toInt()
 
     private fun isNetworkAvailable() : Boolean {
         var connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
